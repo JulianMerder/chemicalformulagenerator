@@ -1,2 +1,0 @@
-This code calculates the sum of chemical formulas per nominal mass up to 30T Da for the elements Carbon, Hydrogen and Oxygen. Due to the combinatorial explosion the generation of the final list is split into 15 subparts. Please ensure you have enough computational power!
-Have fun creating chemical formulas and explore the combinatorial explosion. 

@@ -1,4 +1,4 @@
-## calculation for number of chemical formulae per nominal mass:
+## calculation for number of chemical formulae per nominal mass: ensure you have enough computational power or lower settings in max C,H,O
 
 #get index
 args = commandArgs(trailingOnly=TRUE) 
@@ -10,23 +10,13 @@ G <- t(matrix(vf, ncol = 91, byrow = TRUE))
 
 #create list for subset
 chemlistlist<-list()
-# include NSP filter or not
-checkgroup<-0
+
 
 #create grid for all combinations
         for (j in G[1,pint]:G[91,pint]){
           chemlist = expand.grid(C = 1:2500, H=0:12000, O=j:j) 
           #chemlist = chemlist[chemlist$H <= 8 * (chemlist$C) & (chemlist$O) <= (2*chemlist$C),] #filter here or below
           #chemlist = chemlist[chemlist$H > 0.25 * chemlist$C,]
-          
-          #'NSP filter'
-          if (checkgroup!=0){
-            chemlist=chemlist[!(chemlist$N>1 & (chemlist$S+chemlist$P)>0),]
-            chemlist=chemlist[!(chemlist$N==1 & chemlist$P >= 1 & chemlist$S >= 1),]
-            chemlist=chemlist[!((chemlist$P+chemlist$S) > 2),]
-            chemlist=chemlist[!(chemlist$N==1 & chemlist$P >1),]
-            chemlist=chemlist[!(chemlist$N==1 & chemlist$S >1),]}
-          
           
           
      ##calculate properties for filtering
@@ -58,8 +48,11 @@ checkgroup<-0
 
 chemlist<-do.call("rbind", chemlistlist)
 
+#now you have the final formula list
+
 GG<-round(chemlist$mass, digits = 0)
 
+#count masses per nominal mass
 UU<-numeric(30000)
 for (i in 1:30000){
   UU[i]<-sum(GG==i)}
