@@ -33,7 +33,7 @@ chemlistlist<-list()
           #filter by HC
           chemlist$H.C<-round(chemlist$H/chemlist$C,3)
           
-          chemlist<-chemlist[chemlist$H.C<=8,]
+          #chemlist<-chemlist[chemlist$H.C<=8,]
           #create formula
           chemlist$formula <- apply(chemlist, 1, function(x){y = which(x!=0) 
           paste(colnames(chemlist)[y], x[y], collapse = " ")})
