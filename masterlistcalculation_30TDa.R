@@ -18,8 +18,13 @@ chemlistlist<-list()
           #chemlist = chemlist[chemlist$H <= 8 * (chemlist$C) & (chemlist$O) <= (2*chemlist$C),] #filter here or below
           #chemlist = chemlist[chemlist$H > 0.25 * chemlist$C,]
           
-          
-     ##calculate properties for filtering
+         
+          #create formula
+          chemlist$formula <- apply(chemlist, 1, function(x){y = which(x!=0) 
+          paste(colnames(chemlist)[y], x[y], collapse = " ")})    
+                
+                
+          ##calculate properties for filtering
           chemlist$valence = with(chemlist,C*4  + O*2 + H*1)
           
           #filter by valence
@@ -34,9 +39,7 @@ chemlistlist<-list()
           chemlist$H.C<-round(chemlist$H/chemlist$C,3)
           
           #chemlist<-chemlist[chemlist$H.C<=8,]
-          #create formula
-          chemlist$formula <- apply(chemlist, 1, function(x){y = which(x!=0) 
-          paste(colnames(chemlist)[y], x[y], collapse = " ")})
+         
           #create mass
           chemlist$mass = with(chemlist, C*12 + H*1.0078250+ O*15.99491461956)
           #filter by mass
