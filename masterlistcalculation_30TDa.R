@@ -1,8 +1,12 @@
 ## calculation for number of chemical formulae per nominal mass: ensure you have enough computational power or lower settings in max C,H,O
 
-#get index
+#get index for parallel computing
 args = commandArgs(trailingOnly=TRUE) 
 pint=as.numeric(as.character(args[1])) 
+
+
+# if no parallel computing is used set pint to integer between 1 and 15 and redo calculations 15 times with increasing 'pint'
+# pint=1L # 2,3,...15
 
 #split range into 15 parts 91*15
 vf<-0:1364 
@@ -13,7 +17,7 @@ chemlistlist<-list()
 
 
 #create grid for all combinations
-        for (j in G[1,pint]:G[91,pint]){
+        for (j in G[1,pint]:G[91,pint]){  
           chemlist = expand.grid(C = 1:2500, H=0:12000, O=j:j) 
           #chemlist = chemlist[chemlist$H <= 8 * (chemlist$C) & (chemlist$O) <= (2*chemlist$C),] #filter here or below
           #chemlist = chemlist[chemlist$H > 0.25 * chemlist$C,]
@@ -51,7 +55,7 @@ chemlistlist<-list()
 
 chemlist<-do.call("rbind", chemlistlist)
 
-#now you have the final formula list
+#now you have the final formula list for your chosen pint (O interval)
 
 GG<-round(chemlist$mass, digits = 0)
 
